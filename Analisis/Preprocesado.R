@@ -1,6 +1,5 @@
 # preprocesado de las colonias
 setwd("~/Datos/Desabasto agua/Enero 2016/Analisis")
-library(rvest)
 library(magrittr)
 library(stringr)
 # funciones utiles
@@ -13,7 +12,7 @@ colonias_texto <- readLines(con = "../Datos/Colonias.txt")[-1]
 caract_de <- c("á", "é", "í", "ó", "ú", "Á", "É", "Í", "Ó", "Ú", "Ñ")
 caract_to <- c("a", "e", "i", "o", "u", "a", "e", "i", "o", "u", "ñ")
 caract_trans <- matrix(c(caract_de, caract_to), ncol = 2)
-saveRDS(caract_trans, file = "../Datos/Matriz_trans.Rds", compress = FALSE)
+#saveRDS(caract_trans, file = "../Datos/Matriz_trans.Rds", compress = FALSE)
 #colnames(caract_trans) <- c("de", "to")
 
 colonias_nombre <- colonias_texto %>% 
@@ -51,11 +50,11 @@ rengl_deleg <- grepl(pattern = "[0-9]{1,2}.\\|.[1-9]{1,2}$", x = colonias_nombre
 # magia
 for (i in seq_along(delegaciones)) {
     afect_local <- seq(from = sum(rengl_deleg[i], 1), to = sum(rengl_deleg[i + 1], -1))
-    delegaciones[[i]] <- vector(mode = "list", length = 2)
-    names(delegaciones[[i]]) <- c("colonia", "efecto")
-    delegaciones[[i]]$colonia <- colonias[afect_local]
-    delegaciones[[i]]$efecto  <- efecto_en_colonia[afect_local]
-    rm(afect_local)
+    colonia_t <- colonias[afect_local]
+    efecto_t  <- efecto_en_colonia[afect_local]
+    delegaciones[[i]] <- data.frame(colonia = colonia_t, efecto = efecto_t, 
+                                    stringsAsFactors = FALSE)
+    rm(afect_local, colonia_t, efecto_t)
 }
 # problema menor
 delegaciones[[1]]$efecto[3]  <- "escasez"

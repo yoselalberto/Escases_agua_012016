@@ -17,7 +17,6 @@ matriz_transf <- readRDS("../Datos/Matriz_trans.Rds")
 # cambio los nombres de las variables del mapa
 names(mapa_colonias) <- c("id", "zip", "estado", "del", "nombre", "tipo")
 
-
 # convierto a minusculas y quito acentos
 mapa_colonias[["nombre"]] %<>% str_to_lower(locale = "sp") %>%
                                   elim_Acent(matriz_trans = matriz_transf)
@@ -32,17 +31,17 @@ mapa_colonias_afec <- mapa_colonias[-dele_con_agua, ]
 # enlazo la info del mapa con la del sacdf
 
 # delegacion y colonia
-colonias_mapa_info <- data.frame(mapa_colonias_afec)[, c(4,5)] %>%
+colonias_mapa_info <- data.frame(mapa_colonias_afec)[, c("del", "nombre")] %>%
                       sapply(tolower) %>% 
                       as.data.frame(stringsAsFactors = FALSE)
 # las guardare en una lista
 # magia
 info_colonias_mapa <- vector(mode = "list", length = length(unique(colonias_mapa_info[, 1])))
 #nombro las delegaciones
-names(info_colonias_mapa) <- unique(colonias_mapa_info$mun_name)
+names(info_colonias_mapa) <- unique(colonias_mapa_info$del)
 for (i in seq_along(info_colonias_mapa)) {
-    info_colonias_mapa[[i]] <- filter(colonias_mapa_info, mun_name == names(info_colonias_mapa)[i]) %>%
-                               select(sett_name)
+    info_colonias_mapa[[i]] <- filter(colonias_mapa_info, del == names(info_colonias_mapa)[i]) %>%
+                               select(nombre)
     row.names(info_colonias_mapa[[i]]) <- NULL
 }
 # igualo los nombres de las listas
@@ -53,8 +52,11 @@ colonias_afectadas <- vector(mode = "list", length = length(info_colonias_mapa))
 names(colonias_afectadas) <- names(info_colonias_mapa)
 # más magia
 for (j in seq_along(colonias_afectadas)) {
-    colonias_afectadas[[j]] <- intersect(del_col[[j]], info_colonias_mapa[[j]]$sett_name)
+    colonia_af <- intersect(del_col[[j]]$colonia, info_colonias_mapa[[j]]$nombre)
+    colonias_afectadas[[j]] <- del_col[[j]][which(del_col[[j]]$colonia %in% colonia_af), ]
+    rm(colonia_af)
 }
+# coincidieron el 64%, el resto a mano :(
 
 
 

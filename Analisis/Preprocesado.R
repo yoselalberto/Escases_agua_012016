@@ -9,7 +9,7 @@ colonias_texto <- readLines(con = "../Datos/Colonias.txt")[-1]
 # eliminare "escases" y "Desabasto total" del nombre de la colonia
 # caracteres conflictivos
 caract_de <- c("á", "é", "í", "ó", "ú", "Á", "Ú")
-caract_to <- c("a", "e", "i", "o", "u", "A", "U")
+caract_to <- c("a", "e", "i", "o", "u", "a", "u")
 caract_trans <- matrix(c(caract_de, caract_to), ncol = 2)
 #colnames(caract_trans) <- c("de", "to")
 
@@ -18,14 +18,7 @@ colonias_nombre <- colonias_texto %>%
                    str_trim(side = "right")  %>%
                    str_to_lower()
 # quito el acento
-colonias <- sapply(X = colonias_nombre, mat_tran = caract_trans, 
-                   FUN = function(texto, mat_tran) {
-                            nom_trans <- texto
-                            for (i in nrow(mat_tran)) {
-                            nom_trans <-  str_replace_all(nom_trans, mat_tran[i, 1], mat_tran[i, 2])
-                            }
-                            return(nom_trans)
-                         })
+colonias <-
 names(colonias) <- NULL
 # creo una lista de las delegaciones con colonias afectadas
 info_deleg <- grep(pattern = "[0-9]{1,2}.\\|.[1-9]{1,2}$", x = colonias_texto, value = FALSE)

@@ -10,15 +10,20 @@ source("Funciones.R")
 colonias_texto <- readLines(con = "../Datos/Colonias.txt")[-1]
 # eliminare "escases" y "Desabasto total" del nombre de la colonia
 # caracteres conflictivos
-caract_de <- c("á", "é", "í", "ó", "ú", "Á", "Ú")
-caract_to <- c("a", "e", "i", "o", "u", "a", "u")
+caract_de <- c("á", "é", "í", "ó", "ú", "Á", "É", "Í", "Ó", "Ú", "Ñ")
+caract_to <- c("a", "e", "i", "o", "u", "a", "e", "i", "o", "u", "ñ")
 caract_trans <- matrix(c(caract_de, caract_to), ncol = 2)
+saveRDS(caract_trans, file = "../Datos/Matriz_trans.Rds", compress = FALSE)
 #colnames(caract_trans) <- c("de", "to")
 
 colonias_nombre <- colonias_texto %>% 
                    str_replace(pattern = "Desabasto total|escasez", replacement = "") %>%
                    str_trim(side = "right")  %>%
                    str_to_lower()
+# efecto en la colonia
+efecto_en_colonia <- colonias_texto %>%
+                     str_extract(pattern = "Desabasto total|escasez")
+    
 # quito el acento
 colonias <- elim_Acent(colonias_nombre, caract_trans)
 # creo una lista de las delegaciones con colonias afectadas
@@ -46,11 +51,16 @@ rengl_deleg <- grepl(pattern = "[0-9]{1,2}.\\|.[1-9]{1,2}$", x = colonias_nombre
 # magia
 for (i in seq_along(delegaciones)) {
     afect_local <- seq(from = sum(rengl_deleg[i], 1), to = sum(rengl_deleg[i + 1], -1))
-    delegaciones[[i]] <- colonias[afect_local]
+    delegaciones[[i]] <- vector(mode = "list", length = 2)
+    names(delegaciones[[i]]) <- c("colonia", "efecto")
+    delegaciones[[i]]$colonia <- colonias[afect_local]
+    delegaciones[[i]]$efecto  <- efecto_en_colonia[afect_local]
     rm(afect_local)
 }
+# problema menor
+delegaciones[[1]]$efecto[3]  <- "escasez"
 # guardo las colonias afectadas por delegacion
-#saveRDS(delegaciones, file = "../Datos/Delegacion_colonias.Rds", compress = FALSE)
+saveRDS(delegaciones, file = "../Datos/Delegacion_colonias.Rds", compress = FALSE)
 
         
 # agrupo la info de las afectaciones

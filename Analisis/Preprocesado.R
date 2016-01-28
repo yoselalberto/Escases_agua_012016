@@ -65,5 +65,9 @@ saveRDS(delegaciones, file = "../Datos/Delegacion_colonias.Rds", compress = FALS
 # agrupo la info de las afectaciones
 afectacion <- data.frame(delegacion = names(delegaciones), total = total, sin_agua = sin_agua,
                          escases = escases)
+afectacion$total[1] <- 34
+afectacion$total[12] <- 62
+afectacion$sin_agua[1] <- 25
 #saveRDS(afectacion, file = "../Datos/Resumen_afectacion.Rds", compress = FALSE)
+
 

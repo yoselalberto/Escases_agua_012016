@@ -52,7 +52,7 @@ for (i in seq_along(delegaciones)) {
 # guardo las colonias afectadas por delegacion
 #saveRDS(delegaciones, file = "../Datos/Delegacion_colonias.Rds", compress = FALSE)
 
-
+        
 # agrupo la info de las afectaciones
 afectacion <- data.frame(delegacion = names(delegaciones), total = total, sin_agua = sin_agua,
                          escases = escases)

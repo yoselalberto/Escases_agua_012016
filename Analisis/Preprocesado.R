@@ -24,9 +24,6 @@ total <- as.integer(str_extract_all(string = afectados, pattern = "^[0-9]{1,2}",
 sin_agua <- as.integer(str_extract_all(string = afectados, pattern = "[0-9]{1,2}$", simplify = TRUE))
 # escases
 escases <- total - sin_agua
-# agrupo la info
-afectacion <- data.frame(delegacion = names(delegaciones), total = total, sin_agua = sin_agua,
-                         escases = escases)
 
 # Colonias afectadas por delegacion
 delegaciones <- vector(mode = "list", length = length(resumen_deleg))
@@ -35,12 +32,15 @@ names(delegaciones) <- str_replace_all(resumen_deleg, pattern = '[0-9]{1,2}|\\|'
 # vector con la ubicacion de las delegaciones + num.final
 rengl_deleg <- grepl(pattern = "[0-9]{1,2}.\\|.[1-9]{1,2}$", x = colonias_nombre) %>%
                which() %>%
-               c(length(colonias_nombre))
+               c(sum(length(colonias_nombre), 1))
 # magia
 for (i in seq_along(delegaciones)) {
     afect_local <- seq(from = sum(rengl_deleg[i], 1), to = sum(rengl_deleg[i + 1], -1))
     delegaciones[[i]] <- colonias_nombre[afect_local]
     rm(afect_local)
 }
-# 
+
+# agrupo la info
+afectacion <- data.frame(delegacion = names(delegaciones), total = total, sin_agua = sin_agua,
+                         escases = escases)
 

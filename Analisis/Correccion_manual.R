@@ -39,7 +39,7 @@ afectacion_inc$`benito juárez` %<>% rbind(
                                          c("maria del carmen", "escasez"),
                                          c("atenor sala", "escasez"),
                                          c("gral pedro maria anaya", "escasez"),
-                                         c("piedad narvarte", "Desabasto total"),
+                                         #c("piedad narvarte", "Desabasto total"),
                                          c("niños heroes de chapultepec", "escasez"),
                                          c("xoco", "escasez"),
                                          c("fracc res emperadores", "Desabasto total"),
@@ -50,7 +50,7 @@ afectacion_inc$`benito juárez` %<>% rbind(
                                          c("u hab imss narvarte", "Desabasto total"))
 
 # coyoacan
-carrasco <- c("del pedregal", "infonavit", "panteon mauseleos del angel", "santa ursula", 
+carrasco <- c("del pedregal", "infonavit", "panteon mauseleos del angel",
               "unidad hab villa panamericana", "vistas del maurel", "centro urbano",
               "conjunto hab pedregal de carrasco", "pedregal del maurel", "rinconada las playas infonavit", 
               "modulo social iman")
@@ -76,7 +76,6 @@ afectacion_inc$`cuajimalpa de morelos` %>% rbind(
 # la cuauhtemoc
 afectacion_inc$cuauhtémoc %<>% rbind(
                               c("ampl asturias", "escasez"),
-                              c("hipodromo", "Desabasto total"),
                               c("santa maria la ribera", "Desabasto total"),
                               c("unidad hab nonoalco tlatelolco", "escasez")
 )
@@ -100,9 +99,7 @@ afectacion_inc$iztapalapa %<>% rbind(
                               c("carlos hank gonzalez", "Desabasto total"),
                               c("la hera", "Desabasto total"),
                               c("plan de iguala", "Desabasto total"),
-                              c("magdalena atlazolpa", "escasez"),
                               c("los paseos de churubusco", "Desabasto total"),
-                              c("presidentes de mexico", "Desabasto total"),
                               c("san andres tetepilco", "escasez"),
                               c("unidad hab vicente guerrero", "Desabasto total"),
                               c("santa maria aztahuacan", "Desabasto total"))
@@ -166,7 +163,7 @@ afectacion_inc$tlalpan %<>% rbind(
                            c("pedregal de san nicolas 3ra secc", "Desabasto total"),
                            c("pedregal de san nicolas 4ta secc", "Desabasto total"),
                            c("nuevo renacimiento de axalco", "escasez"),
-                           c("la nopalera", "escasez"),
+                           #c("la nopalera", "escasez"),
                            c("maria esther zuno de echeverria", "Desabasto total"),
                            c("ejidos de sn pedro martir", "escasez"),
                            c("bosques del pedregal", "Desabasto total"),

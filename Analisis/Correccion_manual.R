@@ -62,7 +62,7 @@ afectacion_inc$coyoacán  %<>% rbind(
                              carrasco_afect)
 
 # Cuajimalpa
-mapa_cuajimalpa <- del_afect[which(del_afect$del == "CUAJIMALPA DE MORELOS"), ]
+#mapa_cuajimalpa <- del_afect[which(del_afect$del == "CUAJIMALPA DE MORELOS"), ]
 #writeOGR(mapa_cuajimalpa, dsn = "../Datos/Shape_colonias/Cuajimalpa", layer = "cuajimalpa", 
 #         driver = "ESRI Shapefile")
 contadero <- c("el contadero", "pueblo la venta", "valle de las monjas")
@@ -82,7 +82,7 @@ afectacion_inc$cuauhtémoc %<>% rbind(
 )
 
 # Iztacalco
-mapa_izta <- del_afect[which(del_afect$del == "IZTACALCO"), ]
+#mapa_izta <- del_afect[which(del_afect$del == "IZTACALCO"), ]
 #writeOGR(mapa_izta, dsn = "../Datos/Shape_colonias/Iztacalco", layer = "Iztacalco", 
 #         driver = "ESRI Shapefile")
 afectacion_inc$iztacalco %<>% rbind(
@@ -175,3 +175,6 @@ afectacion_inc$tlalpan %<>% rbind(
                            c("el mirador 2da secc", "escasez"),                        
                            c("el mirador 3ra secc", "escasez"),
                            c("el mirador i", "escasez"))
+
+# guardado
+saveRDS(afectacion_inc, file = "../Datos/Colonias_afectadas.Rds", compress = FALSE)

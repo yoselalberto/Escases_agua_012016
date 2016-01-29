@@ -16,31 +16,44 @@ colonias_df <- readOGR(dsn = "../Datos/Shape_colonias", layer = "Colonias_df",
 afect_mapa   <- readOGR(dsn = "../Datos/Shape_colonias/", layer = "Delegaciones_afectadas",
                      stringsAsFactors = FALSE)
 
-nombres_colonias <- sapply(afectaciones, "[[", 1)
-names(nombres_colonias) <- NULL
-nom_col_afec <- unique(unlist(nombres_colonias))
+# uno todas las colonias en un data frame
+df_afectaciones <- "names<-"(afectaciones, NULL) %>% do.call(what = rbind) %>%
+                    unique() 
+# convervare el cuauhtemoc cuahtemoc
+cuah_rep <- which(df_afectaciones$colonia == "cuauhtemoc" & df_afectaciones$efecto == "escasez")
+df_afectaciones <- df_afectaciones[-cuah_rep, ] %>%
+                   "row.names<-"(value = NULL)
 # un par se llaman valle gomez, pero ambas tienen desabasto total
 # cuauhtemoc en la cuauhtemoc no tiene agua,
 # cuauhtemoc en la magdalena tiene poca
-afectaciones$`la magdalena contreras` %<>% filter(colonia != "cuauhtemoc")
 
 # extraigo colonias afectadas
-ubic_afectadas <- which(afect_mapa$nombre %in% nom_col_afec)
+ubic_afectadas <- which(afect_mapa$nombre %in% df_afectaciones$colonia)
 mapa_col_afec <- afect_mapa[ubic_afectadas, ]
 
 # agrego el tipo de afectación
-orden_secc <- apply(sapply(mapa_col_afec[["nombre"]], FUN = "==", nom_col_afec),
+orden_secc <- apply(sapply(mapa_col_afec[["nombre"]], FUN = "==", df_afectaciones$colonia),
                     MARGIN = 2, FUN = which) 
 
 
 # les asigno el resultado
-mapa_col_afec$efecto <- unlist(afectaciones[orden_secc, "efecto"])
+mapa_col_afec$colonia <- unlist(df_afectaciones[orden_secc, c("colonia")])
+mapa_col_afec$efecto <- unlist(df_afectaciones[orden_secc, c("efecto")])
+# colores
+poca_agua <- "#FEB24C"
+sin_agua <- "#F03B20"
+mapa_col_afec[["color"]] <- ifelse(mapa_col_afec$efecto == "Desabasto total", 
+                                    yes = sin_agua, no = poca_agua)
 
+writeOGR(mapa_col_afec, dsn = "../Datos/Shape_colonias/Colonias_afectadas", 
+         layer = "colonias_afectadas", driver = "ESRI Shapefile")
 # Graficado
 
 # mapa con las colonias afectadas resaltadas
-png(filename = "../Imagenes/Colonias_afectadas.png", width = 1000, height = 1130)
-par(mar = c(0, 0, 0, 0) + 0.1, xaxs = "i", yaxs = "i",  lwd = 0.15)
-plot(colonias_df,  bg = "gray97")
-plot(mapa_col_afec, col = "gray85", add = TRUE)
+png(filename = "../Imagenes/Colonias_efecto.png", width = 1000, height = 1130)
+par(mar = c(0, 0, 0, 0) + 0.1, xaxs = "i", yaxs = "i",  lwd = 0.15, cex = 2)
+plot(colonias_df,  bg = "gray97", col = "gray90")
+plot(mapa_col_afec, col = mapa_col_afec$color, add = TRUE)
+legend("topleft", legend = c("Desabasto total", "Escasez", "Ninguna"), 
+       fill = c(sin_agua, poca_agua, "gray90"), bty = "n", title = "Afectación")
 dev.off()

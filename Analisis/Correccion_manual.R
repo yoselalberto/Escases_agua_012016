@@ -20,18 +20,18 @@ del_afect <- readOGR(dsn = "../Datos/Shape_colonias/", layer = "Delegaciones_afe
 
 # azcapo
 afectacion_inc$azcapotzalco %<>% rbind(
-                                     c("ampl san pedro xalpa", "escacez"),
-                                     c("san bernabe", "escacez"),
-                                     c("santa ines", "escacez"),
-                                     c("san marcos", "escacez"),
-                                     c("santa cruz acayucan", "escacez"),
-                                     c("nueva ampl el rosario", "escacez"),
-                                     c("la providencia", "escacez"),
-                                     c("barrio san sebastian", "escacez"),
-                                     c("santa maria maninalco", "escacez"),
-                                     c("azcapotzalco 2000", "escacez"),
-                                     c("unidad hab cuitlahuac", "escacez"),
-                                     c("villa azcapotzalco", "escacez"))
+                                     c("ampl san pedro xalpa", "escasez"),
+                                     c("san bernabe", "escasez"),
+                                     c("santa ines", "escasez"),
+                                     c("san marcos", "escasez"),
+                                     c("santa cruz acayucan", "escasez"),
+                                     c("nueva ampl el rosario", "escasez"),
+                                     c("la providencia", "escasez"),
+                                     c("barrio san sebastian", "escasez"),
+                                     c("santa maria maninalco", "escasez"),
+                                     c("azcapotzalco 2000", "escasez"),
+                                     c("unidad hab cuitlahuac", "escasez"),
+                                     c("villa azcapotzalco", "escasez"))
 
 # benito juarez
 afectacion_inc$`benito juárez` %<>% rbind(
@@ -90,7 +90,7 @@ afectacion_inc$iztacalco %<>% rbind(
                              c("gabriel ramos millan secc tlacotal", "Desabasto total"),
                              c("gabriel ramos millan secc bramadero", "escasez"),
                              c("ex ejido magdalena mixhuca", "escasez"),
-                             c("san pedro", " Desabasto total"),
+                             c("san pedro", "Desabasto total"),
                              c("lic carlos zapata 1ra y 2da secc", "escasez"))
                              
 # Iztapalapa

@@ -27,6 +27,7 @@ dele_con_agua <- which(mapa_colonias$del == 'GUSTAVO A MADERO' |
                        mapa_colonias$del == 'XOCHIMILCO')
 # delegaciones afectadas
 mapa_colonias_afec <- mapa_colonias[-dele_con_agua, ]
+#writeOGR(mapa_colonias_afec, "../Datos/Shape_colonias/", "Delegaciones_afectadas", driver = "ESRI Shapefile")
 
 # enlazo la info del mapa con la del sacdf
 
@@ -34,6 +35,7 @@ mapa_colonias_afec <- mapa_colonias[-dele_con_agua, ]
 colonias_mapa_info <- data.frame(mapa_colonias_afec)[, c("del", "nombre")] %>%
                       sapply(tolower) %>% 
                       as.data.frame(stringsAsFactors = FALSE)
+
 # las guardare en una lista
 # magia
 info_colonias_mapa <- vector(mode = "list", length = length(unique(colonias_mapa_info[, 1])))
@@ -44,6 +46,8 @@ for (i in seq_along(info_colonias_mapa)) {
                                select(nombre)
     row.names(info_colonias_mapa[[i]]) <- NULL
 }
+#saveRDS(info_colonias_mapa, file = "../Datos/Info_de_mapa.Rds", compress = FALSE)
+
 # igualo los nombres de las listas
 names(del_col) <- names(info_colonias_mapa)
 
@@ -54,14 +58,14 @@ names(colonias_afectadas) <- names(info_colonias_mapa)
 for (j in seq_along(colonias_afectadas)) {
     colonia_af <- intersect(del_col[[j]]$colonia, info_colonias_mapa[[j]]$nombre)
     colonias_afectadas[[j]] <- del_col[[j]][which(del_col[[j]]$colonia %in% colonia_af), ]
+    row.names(colonias_afectadas[[j]]) <- NULL
     rm(colonia_af)
 }
+# guardo la lista
+#saveRDS(colonias_afectadas, file = "../Datos/Col_afec_parcial.Rds", compress = FALSE)
+
+
 # coincidieron el 64%, el resto a mano :(
-
-
-
-
-
 
 
 # gráficas exploratorias

@@ -19,6 +19,10 @@ colonias_nombre <- colonias_texto %>%
                    str_replace(pattern = "Desabasto total|escasez", replacement = "") %>%
                    str_trim(side = "right")  %>%
                    str_to_lower()
+# nombre sacmex
+nombre_colonias <-  colonias_texto %>% 
+                    str_replace(pattern = "Desabasto total|escasez", replacement = "") %>%
+                    str_trim(side = "right")
 # efecto en la colonia
 efecto_en_colonia <- colonias_texto %>%
                      str_extract(pattern = "Desabasto total|escasez")
@@ -52,7 +56,9 @@ for (i in seq_along(delegaciones)) {
     afect_local <- seq(from = sum(rengl_deleg[i], 1), to = sum(rengl_deleg[i + 1], -1))
     colonia_t <- colonias[afect_local]
     efecto_t  <- efecto_en_colonia[afect_local]
+    nombre_colonias_t <- nombre_colonias[afect_local]
     delegaciones[[i]] <- data.frame(colonia = colonia_t, efecto = efecto_t, 
+                                    nombre_oficial = nombre_colonias_t,
                                     stringsAsFactors = FALSE)
     rm(afect_local, colonia_t, efecto_t)
 }
@@ -63,8 +69,8 @@ saveRDS(delegaciones, file = "../Datos/Delegacion_colonias.Rds", compress = FALS
 
         
 # agrupo la info de las afectaciones
-afectacion <- data.frame(delegacion = names(delegaciones), total = total, sin_agua = sin_agua,
-                         escases = escases)
+afectacion <- data.frame(delegacion = names(delegaciones), total = total,
+                         sin_agua = sin_agua, escases = escases)
 afectacion$total[1] <- 34
 afectacion$total[12] <- 62
 afectacion$sin_agua[1] <- 25

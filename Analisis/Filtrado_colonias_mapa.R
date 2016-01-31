@@ -69,7 +69,7 @@ writeOGR(mapa_afectaciones, dsn = "../Datos/Shapes/Colonias_afectadas",
 png(filename = "../Imagenes/Colonias_efecto_b.png", width = 1000, height = 1130)
 par(mar = c(0, 0, 0, 0) + 0.1, xaxs = "i", yaxs = "i",  lwd = 0.15, cex = 2)
 plot(colonias_df,  bg = "gray97", col = "gray90")
-plot(mapa_col_afec, col = mapa_col_afec$color, add = TRUE)
+plot(mapa_afectaciones, col = mapa_afectaciones$color, add = TRUE)
 legend("topleft", legend = c("Desabasto total", "Escasez", "Ninguna"), 
        fill = c(sin_agua, poca_agua, "gray90"), bty = "n", title = "Afectación")
 dev.off()

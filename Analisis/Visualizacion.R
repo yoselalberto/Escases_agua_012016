@@ -30,15 +30,18 @@ col_poca <- "#FEB24C"
 # Mapas
 color_afec <- colonias_afectadas$color
 centro_col <- coordinates(colonias_afectadas)
+
 # leaflet
 mapa <- leaflet(data = colonias_afectadas) %>%
         setView(-99.168, 19.383, zoom = 11) %>%
         addProviderTiles("CartoDB.PositronNoLabels") %>%
         setMaxBounds(-99.3649, 19.0482,-98.9403,19.5927) %>%
-        addPolygons(data = mapa_df, weigth = 5, color = "gray40", fillColor = NULL) %>%
-        addPolygons(data = delegaciones, weight = 2, color = "gray97", fillOpacity = 0.1) %>%
-        addPolygons(color = ~color, weight = 1, fillOpacity = 0.6, 
-                    popup = htmlEscape(~colonia))
+        addPolygons(data = mapa_df, color = "darkgrey", fill = FALSE, opacity = 1,
+                    weight = 4) %>%
+        addPolygons(color = ~color, weight = 1, fillOpacity = 0.75, 
+                    popup = htmlEscape(~colonia)) %>%
+        addPolygons(data = delegaciones, weight = 2, color = "darkgrey", fill = FALSE,
+                    opacity = 1)
 
 
 # en png

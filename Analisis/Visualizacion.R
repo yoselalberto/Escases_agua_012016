@@ -25,10 +25,10 @@ colonias_afectadas <- readOGR("../Datos/Shapes/Colonias_afectadas",
 informacion <- data.frame(colonias_afectadas) %>%
                select(del, nombre_of, efecto) %>%
                rename(Delegación = del, Colonia = nombre_of, Afectación = efecto) %>%
-               mutate(Delegación = str_to_title(Delegación)) %>%
-               mutate(Afectación = str_to_title(Afectación)) %>%
+               mutate(Delegación = as.factor(str_to_title(Delegación))) %>%
+               mutate(Afectación = as.factor(str_to_title(Afectación))) %>%
                arrange(Delegación, Colonia)
-#saveRDS(informacion, file = "../Datos/Informacion_colonias.Rds", compress = FALSE)
+saveRDS(informacion, file = "../Datos/Informacion_colonias.Rds", compress = FALSE)
 
 # Mapas
 
@@ -50,9 +50,8 @@ mapa <- leaflet(data = colonias_afectadas) %>%
                   opacity = 0.8)
 
 # Table HTML
-datatable(informacion, rownames = FALSE, caption = c("Colonias con desabasto de agua"))
-
-
+datatable(informacion, rownames = FALSE,
+          caption = c("Colonias con desabasto de agua"), filter = "top")
 
 
 # en png

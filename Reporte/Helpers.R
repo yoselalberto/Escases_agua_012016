@@ -29,5 +29,6 @@ mapa
 
 ##---- tabla_busqueda ----
 informacion <- readRDS("../Datos/Informacion_colonias.Rds")
-datatable(informacion, rownames = FALSE, caption = c("Colonias con desabasto de agua"))
+datatable(informacion, rownames = FALSE, caption = c("Colonias con desabasto de agua"),
+          filter = "top")
 

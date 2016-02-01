@@ -23,19 +23,19 @@ options(scipen = 2, digits = 6)
 ```
 
 
-Este fin de semana 416 colonias en la Ciudad de México, y 13 municipios de México, tuvieron desabasto de agua, causadas por mantenimiento al Cutzamala. De ellas 161 colonias tienen desabasto total, mientras que las 254 restantes registran escases.  
+Este fin de semana 416 colonias en la Ciudad de México, y 13 municipios de México, tuvieron desabasto de agua, causadas por mantenimiento al Cutzamala. De ellas 161 colonias tienen desabasto total, mientras que las 255 restantes registran escases.  
 
 A continuación se muestra un mapa con las colonias afectadas.  
 
 ```{r, label = mapa_desabasto, cache = FALSE, fig.width = 10, fig.height = 11, fig.align = "center"}
 ```  
 
-Hay colonias que no aparecen en el mapa, problemas técnicos, la lista completa de coloniass afectadas se puede revisar en la siguiente tabla:
+Hay colonias que no aparecen en el mapa, la lista completa de colonias afectadas se puede revisar en la siguiente tabla:  
 
 ```{r, label = tabla_busqueda, cache = FALSE}
-```
+```  
 
-
+Se espera que para el lunes 1 de Febrero el servicio esté restablecido.
 
 
 

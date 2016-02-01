@@ -3,8 +3,10 @@ setwd("~/Datos/Desabasto agua/Enero 2016/Analisis")
 library(sp)
 library(rgdal)
 library(dplyr)
+library(stringr)
 library(leaflet)
 library(htmltools)
+library(DT)
 
 # cargado de datos
 # mapa delagacional
@@ -17,8 +19,16 @@ delegaciones <- readOGR(dsn = dir_shp,layer = "df_municipal") %>%
 # todas las colonias
 colonias_df <- readOGR(dir_shp, "Colonias_df", stringsAsFactors = FALSE)
 # colonias afectadas
-colonias_afectadas <- readOGR("../Datos/Shapes/Colonias_afectadas", "colonias_afectadas",
-                              stringsAsFactors = FALSE)
+colonias_afectadas <- readOGR("../Datos/Shapes/Colonias_afectadas", 
+                              "colonias_afectadas", stringsAsFactors = FALSE)
+# datos para la tabla html
+informacion <- data.frame(colonias_afectadas) %>%
+               select(del, nombre_of, efecto) %>%
+               rename(Delegación = del, Colonia = nombre_of, Afectación = efecto) %>%
+               mutate(Delegación = str_to_title(Delegación)) %>%
+               mutate(Afectación = str_to_title(Afectación)) %>%
+               arrange(Delegación, Colonia)
+#saveRDS(informacion, file = "../Datos/Informacion_colonias.Rds", compress = FALSE)
 
 # Mapas
 
@@ -32,15 +42,15 @@ mapa <- leaflet(data = colonias_afectadas) %>%
                     weight = 4) %>%
         addPolygons(color = ~color, weight = 1, fillOpacity = 0.75, 
                     popup = htmlEscape(~nombre_of)) %>%
-        addPolygons(data = delegaciones, weight = 2, color = "darkgrey", fill = FALSE,
-                    opacity = 1) %>%
+        addPolygons(data = delegaciones, weight = 2, color = "darkgrey", 
+                    fill = FALSE, opacity = 1) %>%
 # leyenda
         addLegend(position = "topright", labels = c("Desabasto total", "Escasez"),
                   title = "Afectación", colors = c(col_sin, col_poca), 
                   opacity = 0.8)
 
 # Table HTML
-
+datatable(informacion, rownames = FALSE, caption = c("Colonias con desabasto de agua"))
 
 
 

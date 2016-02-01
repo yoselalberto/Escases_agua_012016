@@ -15,6 +15,7 @@ library(rgdal)
 library(dplyr)
 library(leaflet)
 library(htmltools)
+library(DT)
 opts_chunk$set(echo = FALSE, cache = TRUE, dev = "CairoPNG", message = FALSE)
 options(scipen = 2, digits = 6)
 ```
@@ -24,11 +25,15 @@ options(scipen = 2, digits = 6)
 
 Este fin de semana 416 colonias en la Ciudad de México, y 13 municipios de México, tuvieron desabasto de agua, causadas por mantenimiento al Cutzamala. De ellas 161 colonias tienen desabasto total, mientras que las 254 restantes registran escases.  
 
-A continuación se muestra un mapa con las colonias afectadas, en naranaja las colonias con escasez de agua, y en rojo las colonias con desabasto total.  
+A continuación se muestra un mapa con las colonias afectadas.  
 
-```{r, label = mapa_desabasto, cache = FALSE, fig.width = 8, fig.height = 9, fig.align = "center"}
+```{r, label = mapa_desabasto, cache = FALSE, fig.width = 10, fig.height = 11, fig.align = "center"}
 ```  
 
+Hay colonias que no aparecen en el mapa, problemas técnicos, la lista completa de coloniass afectadas se puede revisar en la siguiente tabla:
+
+```{r, label = tabla_busqueda, cache = FALSE}
+```
 
 
 

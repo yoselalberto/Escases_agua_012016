@@ -2,7 +2,6 @@
 setwd("~/Datos/Desabasto agua/Enero 2016/Analisis")
 library(sp)
 library(rgdal)
-library(magrittr)
 library(dplyr)
 library(leaflet)
 library(htmltools)
@@ -11,7 +10,6 @@ library(htmltools)
 # mapa delagacional
 #delegaciones
 dir_shp <- "../Datos/Shapes"
-
 mapa_df <- readOGR(dsn = "../Datos/Shapes/DF",layer = "df_estatal") %>%
            geometry()
 delegaciones <- readOGR(dsn = dir_shp,layer = "df_municipal") %>%
@@ -28,8 +26,7 @@ col_sin <- "#F03B20"
 col_poca <- "#FEB24C"
 
 # Mapas
-color_afec <- colonias_afectadas$color
-centro_col <- coordinates(colonias_afectadas)
+#centro_col <- coordinates(colonias_afectadas)
 
 # leaflet
 mapa <- leaflet(data = colonias_afectadas) %>%
@@ -39,7 +36,7 @@ mapa <- leaflet(data = colonias_afectadas) %>%
         addPolygons(data = mapa_df, color = "darkgrey", fill = FALSE, opacity = 1,
                     weight = 4) %>%
         addPolygons(color = ~color, weight = 1, fillOpacity = 0.75, 
-                    popup = htmlEscape(~colonia)) %>%
+                    popup = htmlEscape(~nombre_of)) %>%
         addPolygons(data = delegaciones, weight = 2, color = "darkgrey", fill = FALSE,
                     opacity = 1)
 

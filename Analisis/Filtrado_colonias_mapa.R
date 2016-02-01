@@ -42,15 +42,15 @@ for (k in seq_along(nombres_del)) {
 # mapa sin colonias repetidas
 mapa_afectaciones <- mapa_col_afec[indices_corr, ]
 
-
-# agrego el tipo de afectación
+# obtengo el orden para la integracion
 orden_secc <- apply(sapply(mapa_afectaciones[["nombre"]], FUN = "==", df_afectaciones$colonia),
                     MARGIN = 2, FUN = which) 
-
 
 # les asigno el resultado
 mapa_afectaciones$colonia <- unlist(df_afectaciones[orden_secc, c("colonia")])
 mapa_afectaciones$efecto <- unlist(df_afectaciones[orden_secc, c("efecto")])
+mapa_afectaciones$nombre_of <- unlist(df_afectaciones[orden_secc, c("nombre_oficial")])
+
 # arreglo la colonia cuauhtemoc, magdalena
 cuah_mc <- which(mapa_afectaciones$colonia == "cuauhtemoc" &
                      mapa_afectaciones$del == "LA MAGDALENA CONTRERAS")
@@ -61,15 +61,16 @@ sin_agua <- "#F03B20"
 mapa_afectaciones[["color"]] <- ifelse(mapa_afectaciones$efecto == "Desabasto total", 
                                     yes = sin_agua, no = poca_agua)
 
-writeOGR(mapa_afectaciones, dsn = "../Datos/Shapes/Colonias_afectadas", 
-         layer = "colonias_afectadas", driver = "ESRI Shapefile")
+mapa_efectos <- mapa_afectaciones[, c("del", "colonia", "efecto", "nombre_of", "color")]
+#writeOGR(mapa_efectos, dsn = "../Datos/Shapes/Colonias_afectadas", 
+#         layer = "colonias_afectadas", driver = "ESRI Shapefile")
 # Graficado
 
 # mapa con las colonias afectadas resaltadas
 png(filename = "../Imagenes/Colonias_efecto_b.png", width = 1000, height = 1130)
 par(mar = c(0, 0, 0, 0) + 0.1, xaxs = "i", yaxs = "i",  lwd = 0.15, cex = 2)
 plot(colonias_df,  bg = "gray97", col = "gray90")
-plot(mapa_afectaciones, col = mapa_afectaciones$color, add = TRUE)
+plot(mapa_efectos, col = mapa_efectos$color, add = TRUE)
 legend("topleft", legend = c("Desabasto total", "Escasez", "Ninguna"), 
        fill = c(sin_agua, poca_agua, "gray90"), bty = "n", title = "Afectación")
 dev.off()

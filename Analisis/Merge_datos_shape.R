@@ -8,7 +8,7 @@ library(dplyr)
 source("Funciones.R")
 
 # cargado de datos
-mapa_colonias <- readOGR(dsn = "../Datos/Shape_colonias", layer = "Colonias_df",
+mapa_colonias <- readOGR(dsn = "../Datos/Shapes", layer = "Colonias_df",
                          stringsAsFactors = FALSE)
 res_afect     <- readRDS("../Datos/Resumen_afectacion.Rds")
 del_col       <- readRDS("../Datos/Delegacion_colonias.Rds")
@@ -64,14 +64,10 @@ for (j in seq_along(colonias_afectadas)) {
 # guardo la lista
 #saveRDS(colonias_afectadas, file = "../Datos/Col_afec_parcial.Rds", compress = FALSE)
 
-
 # coincidieron el 64%, el resto a mano :(
-
 
 # gráficas exploratorias
 png(filename = "../Imagenes/Colonias_df.png", width = 600, height = 670, bg = "gray97", res = 600)
 par(mar = c(0, 0, 0, 0) + 0.1, xaxs = "i", yaxs = "i",  lwd = 0.15)
 plot(mapa_colonias, bg = "gray97")
 dev.off()
-
-

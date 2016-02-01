@@ -1,0 +1,7 @@
+base
+knitr
+sp
+rgdal
+dplyr
+leaflet
+htmltools

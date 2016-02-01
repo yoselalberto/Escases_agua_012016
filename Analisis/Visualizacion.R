@@ -25,10 +25,11 @@ colonias_afectadas <- readOGR("../Datos/Shapes/Colonias_afectadas",
 informacion <- data.frame(colonias_afectadas) %>%
                select(del, nombre_of, efecto) %>%
                rename(Delegación = del, Colonia = nombre_of, Afectación = efecto) %>%
+               unique() %>%
                mutate(Delegación = as.factor(str_to_title(Delegación))) %>%
                mutate(Afectación = as.factor(str_to_title(Afectación))) %>%
                arrange(Delegación, Colonia)
-saveRDS(informacion, file = "../Datos/Informacion_colonias.Rds", compress = FALSE)
+#saveRDS(informacion, file = "../Datos/Informacion_colonias.Rds", compress = FALSE)
 
 # Mapas
 
@@ -46,13 +47,12 @@ mapa <- leaflet(data = colonias_afectadas) %>%
                     fill = FALSE, opacity = 1) %>%
 # leyenda
         addLegend(position = "topright", labels = c("Desabasto total", "Escasez"),
-                  title = "Afectación", colors = c(col_sin, col_poca), 
-                  opacity = 0.8)
+                  title = "Afectación", colors = c(col_sin, col_poca), opacity = 0.8)
 
 # Table HTML
-datatable(informacion, rownames = FALSE,
-          caption = c("Colonias con desabasto de agua"), filter = "top")
-
+datatable(informacion, rownames = FALSE, filter = "top",
+          caption = c("Colonias con desabasto de agua"))
+    
 
 # en png
 col_sin <- "#F03B20"

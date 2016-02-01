@@ -20,28 +20,34 @@ colonias_df <- readOGR(dir_shp, "Colonias_df", stringsAsFactors = FALSE)
 colonias_afectadas <- readOGR("../Datos/Shapes/Colonias_afectadas", "colonias_afectadas",
                               stringsAsFactors = FALSE)
 
-
-# colores 
-col_sin <- "#F03B20"
-col_poca <- "#FEB24C"
-
 # Mapas
-#centro_col <- coordinates(colonias_afectadas)
 
 # leaflet
 mapa <- leaflet(data = colonias_afectadas) %>%
         setView(-99.168, 19.383, zoom = 11) %>%
-        addProviderTiles("CartoDB.PositronNoLabels") %>%
+        addProviderTiles("CartoDB.PositronNoLabels",
+                         options = tileOptions(minZoom = 11, maxZoom = 14)) %>%
         setMaxBounds(-99.3649, 19.0482,-98.9403,19.5927) %>%
         addPolygons(data = mapa_df, color = "darkgrey", fill = FALSE, opacity = 1,
                     weight = 4) %>%
         addPolygons(color = ~color, weight = 1, fillOpacity = 0.75, 
                     popup = htmlEscape(~nombre_of)) %>%
         addPolygons(data = delegaciones, weight = 2, color = "darkgrey", fill = FALSE,
-                    opacity = 1)
+                    opacity = 1) %>%
+# leyenda
+        addLegend(position = "topright", labels = c("Desabasto total", "Escasez"),
+                  title = "Afectación", colors = c(col_sin, col_poca), 
+                  opacity = 0.8)
+
+# Table HTML
+
+
+
 
 
 # en png
+col_sin <- "#F03B20"
+col_poca <- "#FEB24C"
 png(filename = "../Imagenes/Colonias_efecto_1.png", width = 800, height = 900)
 par(mar = c(0, 0, 0, 0) + 0.1, xaxs = "i", yaxs = "i",  lwd = 0.15, cex = 2)
 plot(delegaciones, bg = "gray97")

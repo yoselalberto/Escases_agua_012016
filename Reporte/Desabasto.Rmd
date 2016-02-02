@@ -2,7 +2,9 @@
 title: "Desabasto de agua en la Ciudad de Mexico"
 author: "Alberto Jaimes"
 date: "Enero de 2016"
-output: html_document
+output:
+    html_document:
+        keep_md: true
 ---
 ```{r, label = "script_ayuda", echo = FALSE}
 knitr::read_chunk("Helpers.R")

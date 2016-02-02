@@ -57,7 +57,8 @@ datatable(informacion, rownames = FALSE, filter = "top",
 # en png
 col_sin <- "#F03B20"
 col_poca <- "#FEB24C"
-png(filename = "../Imagenes/Colonias_efecto_1.png", width = 800, height = 900)
+#png(filename = "Colonias_efecto_b.png", width = 800, height = 900)
+png(filename = "../Imagenes/Colonias_afectacion.png", width = 800, height = 900)
 par(mar = c(0, 0, 0, 0) + 0.1, xaxs = "i", yaxs = "i",  lwd = 0.15, cex = 2)
 plot(delegaciones, bg = "gray97")
 plot(colonias_df, col = "gray90", add = TRUE)

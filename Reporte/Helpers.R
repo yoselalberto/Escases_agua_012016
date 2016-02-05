@@ -1,14 +1,14 @@
 # este script contiene codigo de soporte para el reporte
 ## ---- cargado ----
-mapa_df <- readOGR(dsn = "../Datos/Shapes/DF", layer = "df_estatal", verbose = FALSE) %>%
+mapa_df <- readOGR('../Datos/mapa_df.geojson', 'OGRGeoJSON', verbose = FALSE) %>%
     geometry()
-delegaciones <- readOGR(dsn = "../Datos/Shapes", layer = "df_municipal",  verbose = FALSE) %>%
+delegaciones <- readOGR('../Datos/delegaciones.geojson', 'OGRGeoJSON',  verbose = FALSE) %>%
     geometry()
 # todas las colonias
-colonias_df <- readOGR("../Datos/Shapes", "Colonias_df", stringsAsFactors = FALSE,
-                       verbose = FALSE)
+colonias_df <- readOGR('../Datos/colonias_df.geojson', 'OGRGeoJSON', 
+                       stringsAsFactors = FALSE, verbose = FALSE)
 # colonias afectadas
-colonias_afectadas <- readOGR("../Datos/Shapes/Colonias_afectadas", "colonias_afectadas",
+colonias_afectadas <- readOGR('../Datos/colonias_afectadas.geojson', 'OGRGeoJSON',
                               stringsAsFactors = FALSE,  verbose = FALSE)
 ##---- mapa_desabasto ----
 mapa <- leaflet(data = colonias_afectadas) %>%

@@ -30,6 +30,13 @@ informacion <- data.frame(colonias_afectadas) %>%
                mutate(Afectación = as.factor(str_to_title(Afectación))) %>%
                arrange(Delegación, Colonia)
 #saveRDS(informacion, file = "../Datos/Informacion_colonias.Rds", compress = FALSE)
+write.csv(informacion, "../Datos/Informacion.csv", row.names = FALSE)
+
+# guardado de mapas como GEOSON
+writeOGR(mapa_df, '../Datos/mapa_df.geojson', 'mapa_df', driver='GeoJSON')
+writeOGR(delegaciones, '../Datos/delegaciones.geojson', 'delegaciones', driver='GeoJSON')
+writeOGR(colonias_df, '../Datos/colonias_df.geojson', 'colonias_df', driver='GeoJSON')
+writeOGR(colonias_afectadas, '../Datos/colonias_afectadas.geojson', 'colonias_afectadas', driver='GeoJSON')
 
 # Mapas
 
